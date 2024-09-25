@@ -1,6 +1,7 @@
 const express = require('express')
 const { Server } = require('socket.io')
 const http = require('http')
+const getUserDetailsFromToken = require('../helpers/getUserDetailsFromToken')
 
 const app = express()
 
@@ -30,8 +31,10 @@ io.on('connection', async(socket)=>{
   socket.join(user?._id?.toString())
   onlineUser.add(user?._id?.toString())
 
+  console.log('onlineUser111',user?._id)
   // 접속하면 제일먼저 하는일
   io.emit('onlineUser', Array.from(onlineUser))
+
 
   // 연결된 사용자 끊어졌을 때
   socket.on('disconnect',()=>{
